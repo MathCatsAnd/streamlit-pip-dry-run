@@ -1,20 +1,30 @@
 import streamlit as st
+from datetime import datetime
+import random
 import os
+
+if 'user' not in st.session_state:
+    st.session_state['user'] = datetime.now().strftime('%Y%m%d%H%M%S') + str(random.randint(1000, 9999))
+
+user = st.session_state.user
 
 def update_pip():
     os.popen('python -m pip install --upgrade pip')
 
 def check_requirements(file):
-    with open(file.name, 'wb') as f:
+    with open(user+'requirements.txt', 'wb') as f:
         f.write(file.getbuffer())
-    return os.popen('pip install -r requirements.txt --dry-run').read()
+    return os.popen(f'pip install -r {user}requirements.txt --dry-run').read()
+
+def clean_up(user):
+    os.remove(f'{user}requirements.txt')
 
 if 'version' not in st.session_state:
     st.session_state['version'] = os.popen('python --version').read()
 
 st.title(f'Pipcheck for {st.session_state["version"]}')
 
-file = st.file_uploader("Upload a file", type=("txt"))
+file = st.file_uploader("Upload a file", type="txt")
 
 if file is None:
     st.write('Please Upload a File')
@@ -48,3 +58,5 @@ final_list.remove('Would')
 final_list.remove('install')
 with st.expander('Final Result', expanded=True):
     st.dataframe(final_list)
+
+clean_up(user)
