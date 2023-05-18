@@ -9,6 +9,11 @@ def check_requirements(file):
         f.write(file.getbuffer())
     return os.popen('pip install -r requirements.txt --dry-run').read()
 
+if 'version' not in st.session_state:
+    st.session_state['version'] = os.popen('python --version').read()
+
+st.title(f'Pipcheck for {st.session_state["version"]}')
+
 file = st.file_uploader("Upload a file", type=("txt"))
 
 if file is None:
