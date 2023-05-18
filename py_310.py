@@ -3,6 +3,15 @@ from datetime import datetime
 import random
 import os
 
+with st.sidebar:
+    st.markdown('''
+    <a href="https://pip-dry-run.streamlit.app/">Python 3.11</a><br/>
+    <a href="https://pip-dry-run-py310.streamlit.app/">Python 3.10</a><br/>
+    <a href="https://pip-dry-run-py39.streamlit.app/">Python 3.9</a><br/>
+    <a href="https://pip-dry-run-py38.streamlit.app/">Python 3.8</a><br/>
+    <a href="https://pip-dry-run-py37.streamlit.app/">Python 3.7</a>
+    ''', unsafe_allow_html=True)
+
 if 'user' not in st.session_state:
     st.session_state['user'] = datetime.now().strftime('%Y%m%d%H%M%S') + str(random.randint(1000, 9999))
 
