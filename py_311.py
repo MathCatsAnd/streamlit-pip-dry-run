@@ -22,7 +22,7 @@ def clean_up(user):
 if 'version' not in st.session_state:
     st.session_state['version'] = os.popen('python --version').read()
 
-st.title(f'Pipcheck for {st.session_state["version"]}')
+st.title(f'Pip dry-run for {st.session_state["version"]}')
 
 file = st.file_uploader("Upload a file", type="txt")
 
