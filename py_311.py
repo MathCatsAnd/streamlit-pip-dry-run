@@ -61,11 +61,15 @@ with st.spinner('Checking requirements.txt...'):
 with st.expander('Complete Output'):
     st.code(result, language=None)
 
-final_line = result.split('\n')[-2]
-final_list = final_line.split(' ')
-final_list.remove('Would')
-final_list.remove('install')
-with st.expander('Final Result', expanded=True):
-    st.dataframe(final_list)
+try:
+    final_line = result.split('\n')[-2]
+    final_list = final_line.split(' ')
+    final_list.remove('Would')
+    final_list.remove('install')
+    with st.expander('Final Result', expanded=True):
+        st.dataframe(final_list)
+except Exception as e:
+    with st.expander('Final Result', expanded=True):
+        st.write('Installation list not generated. See complete output for details.')
 
 clean_up(user)
